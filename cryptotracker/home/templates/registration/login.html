@@ -1,0 +1,16 @@
+<h2>Log In</h2>
+
+{% if form.errors %}
+    <p>Error</p>
+{% endif %}
+
+{% if next %}
+    <p>hey</p>
+{% endif %}
+
+<form method="post" action="{% url 'login' %}">
+  {% csrf_token %}
+  {{ form.as_p }}
+  <input type="submit" value="Login"/>
+  <input type="hidden" name="next" value="{{ next }}"/>
+</form>
