@@ -8,6 +8,6 @@ from tracker.models import Symbol
 class SymbolListView(ListView):
     model = Symbol
 
-class SymbolDetailView(DetailView):
+class SymbolDetailView(LoginRequiredMixin, DetailView):
     model = Symbol
-    template_name = "tracker/symbol_detail.html"
+    #template_name = "tracker/symbol_detail.html"
