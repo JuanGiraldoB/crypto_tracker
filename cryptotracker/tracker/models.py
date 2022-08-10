@@ -7,3 +7,11 @@ class Symbol(models.Model):
 
     def __str__(self):
         return self.symbol
+
+class PriceData(models.Model):
+    symbol = models.ForeignKey(Symbol, on_delete=models.CASCADE)
+    date = models.DateField()
+    open = models.FloatField()
+    high= models.FloatField() 
+    low= models.FloatField()
+    close= models.FloatField()
