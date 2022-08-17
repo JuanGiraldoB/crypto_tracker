@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+   <meta charset='UTF-8'>
+   <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+   <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+   <title>Document</title>
+   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+
+</head>
+<body>
+    
+    <form method="GET">
+        <select name="selector" id="selector">
+            <option>BTCUSDT</option>
+            <option>ETHUSDT</option>
+            <option>ADAUSDT</option>
+            <option>XRPUSDT</option>
+          </select>
+        <button id="submit">Visualizar</button>
+    </form>
+
+    <div class="chart-content" style="width: 50vw; max-height: 30vh;">
+        <canvas id="myChart" width="400" height="400"></canvas>
+    </div>
+    <script>
+        $(document).ready(function () {
+            var data = JSON.parse("{{data|escapejs}}");
+
+            const ctx = document.getElementById('myChart').getContext('2d');
+            const myChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: data.date, //date would go here
+                    datasets: [{
+                        label: data.symbol,
+                        data: data.price  //price would go here
+                    }]
+                },
+                options: {
+                    responsive: false, //to define specific size
+                }
+            });
+            $('#submit').click(function (e) {
+                $.ajax({
+                    url: '',
+                    type: 'GET',
+                    data: {
+                        selector: $('#selector').val()
+                    },
+                    success: function (response) {
+                        myChart.data.datasets[0].label = response.symbol;
+                        myChart.data.labels = response.date;
+                        myChart.data.datasets[0].data = response.price;
+                        myChart.update()
+                    }
+                })
+                e.preventDefault();
+            })
+        })
+    </script>
+</body>
+</html>
