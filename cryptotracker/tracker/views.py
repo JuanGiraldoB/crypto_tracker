@@ -35,7 +35,7 @@ class Chart(View):
     # References
     # https://stackoverflow.com/questions/11875770/how-to-overcome-datetime-datetime-not-json-serializable
 
-    def chart_data(self, symbol):
+    def chart_data(self, symbol="BTCUSDT"):
         symbol_id = Symbol.objects.filter(symbol=symbol).values("id")
         price_data = PriceData.objects.select_related('symbol').values_list(
             'open', flat=True).filter(symbol_id=symbol_id[0]["id"])[::1]
@@ -55,7 +55,7 @@ class Chart(View):
                 'date': price_date
             })
 
-        symbol, price_data, price_date = self.chart_data("BTCUSDT")
+        symbol, price_data, price_date = self.chart_data()
         context = {'symbol': symbol,
                    'price': price_data,
                    'date': price_date
