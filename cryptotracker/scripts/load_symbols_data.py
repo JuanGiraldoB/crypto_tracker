@@ -13,13 +13,8 @@ def get_min_data(symbol, start):
     frame.Date = pd.to_datetime(frame.Date, unit="ms")
     frame.set_index('Date', inplace=True)
     frame = frame.astype(float)
-    i = 0
-    for row in frame.itertuples():
-        print(row[0], row[1], row[2], row[3], row[4])
-        if i == 5:
-            break
-        i += 1
     return frame
+
 
 def run():
 
@@ -34,9 +29,8 @@ def run():
 
             s, created = Symbol.objects.get_or_create(symbol=row[1])
             print(created)
-            print(row[1])
                 
-            df = get_min_data(row[1], '1 days ago UTC-5')
+            df = get_min_data(row[1], '80 days ago UTC')
 
             for row in df.itertuples():
                 p_d = PriceData(symbol=s, date=row[0], open=row[1], high=row[2], low=row[3], close=row[4])
