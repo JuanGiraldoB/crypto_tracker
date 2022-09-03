@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+
+{% block content %}
+    
+    <!-- Select crypto -->
+    <form method="GET">
+        <select name="symbol" id="symbol">
+            <option>BTCUSDT</option>
+            <option>ETHUSDT</option>
+            <option>ADAUSDT</option>
+            <option>XRPUSDT</option>
+        </select>
+
+        <!-- Select interval -->
+        <select name="interval" id="interval">
+            <option>1D</option>
+            <option>4H</option>
+            <option>1H</option>
+        </select>
+
+        <!-- Select Strategy -->
+        <select name="strategy" id="strategy">
+            <option>SMACross(50, 100)</option>
+            <option>SmaCrossShortTerm(20, 50)</option>
+        </select>
+
+        <input type="submit" name="submit" id="submit" value="Calculate">
+    </form>
+
+    {{symbol}}
+    {{interval}}
+    {{strategy}}
+    {{result}}
+    {{output}}
+
+{% endblock %}
