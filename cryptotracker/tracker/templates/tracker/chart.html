@@ -6,15 +6,24 @@
 {% endblock %}
 
 {% block content %}
-    <form method="GET">
-        <select name="selector" id="selector">
-            <option>BTCUSDT</option>
-            <option>ETHUSDT</option>
-            <option>ADAUSDT</option>
-            <option>XRPUSDT</option>
-          </select>
-        <button id="submit">Visualizar</button>
-    </form>
+
+    
+    <!-- Select crypto -->
+    <select name="symbol" id="symbol">
+        <option>BTCUSDT</option>
+        <option>ETHUSDT</option>
+        <option>ADAUSDT</option>
+        <option>XRPUSDT</option>
+    </select>
+
+    <!-- Select interval -->
+    <select name="interval" id="interval">
+        <option>1D</option>
+        <option>4H</option>
+        <option>1H</option>
+    </select>
+    
+
 
     <div class="chart-content" style="width: 50vw; max-height: 30vh;">
         <canvas id="myChart" width="400" height="400"></canvas>
@@ -33,16 +42,15 @@
                         data: data.price  //price would go here
                     }]
                 },
-                options: {
-                    responsive: false, //to define specific size
-                }
+                
             });
-            $('#submit').click(function (e) {
+            $('#symbol, #interval').change(function (e) {
                 $.ajax({
                     url: '',
                     type: 'GET',
                     data: {
-                        selector: $('#selector').val()
+                        symbol: $('#symbol').val(),
+                        interval: $('#interval').val()
                     },
                     success: function (response) {
                         myChart.data.datasets[0].label = response.symbol;
@@ -55,4 +63,6 @@
             })
         })
     </script>
+    {% load static %}
+    <!--<script src="{% static 'tracker/js/chart.js' %}"></script> -->
 {% endblock %}
