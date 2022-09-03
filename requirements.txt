@@ -4,3 +4,4 @@ django-extensions
 pandas
 python-binance
 backtesting
+matplotlib
